@@ -1,4 +1,4 @@
 opencv-python
 numpy
-tensorflow
+tensorflow[and-cuda]
 gdown
