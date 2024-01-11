@@ -2,12 +2,19 @@ import os
 import cv2
 import numpy as np
 import tensorflow as tf
-import gdown
+import requests
 
 # Download model if not exist
 def download_model():
-    url = f"https://drive.google.com/uc?id=1Ml260620LIKa-OrWqdzv_z99NJKixt3W"
-    gdown.download(url, "ssd_mobilenetv2_coco/saved_model.pb", quiet=False)
+    url = "https://drive.google.com/uc?id=1Ml260620LIKa-OrWqdzv_z99NJKixt3W"
+    output_path = "ssd_mobilenetv2_coco/saved_model.pb"
+
+    response = requests.get(url, stream=True)
+
+    with open(output_path, "wb") as output_file:
+        for chunk in response.iter_content(chunk_size=8192):
+            if chunk:
+                output_file.write(chunk)
 
 # Explicitly specify the GPU device
 physical_devices = tf.config.list_physical_devices('GPU')
