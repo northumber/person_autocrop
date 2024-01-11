@@ -57,12 +57,26 @@ def object_detection(input_image_path, output_directory):
 
         # Ensure valid coordinates
         if 0 <= ymin < ymax <= image.shape[0] and 0 <= xmin < xmax <= image.shape[1]:
-            ymin, xmin, ymax, xmax = (
-                int(ymin * image.shape[0]),
-                int(xmin * image.shape[1]),
-                int(ymax * image.shape[0]),
-                int(xmax * image.shape[1]),
-            )
+            if ymin - (ymin * 0.1) >= 0:
+                ymin = int((ymin - (ymin * 0.1)) * image.shape[0])
+            else:
+                ymin = int(ymin * image.shape[0])
+            
+            if ymax + (ymax * 0.1) <= image.shape[0]:
+                ymax = int((ymax + (ymax * 0.1)) * image.shape[0])
+            else:
+                ymax = int(ymax * image.shape[0])
+            
+            if xmin - (xmin * 0.1) >= 0:
+                xmin = int((xmin - (xmin * 0.1)) * image.shape[1])
+            else:
+                xmin = int(xmin * image.shape[1])
+            
+            if xmax + (xmax * 0.1) <= image.shape[1]:
+                xmax = int((xmax + (xmax * 0.1)) * image.shape[1])
+            else:
+                xmax = int(xmax * image.shape[1])
+            
             cropped_person = image[ymin:ymax, xmin:xmax, :]
 
             # Check if the cropped_person array is not empty
