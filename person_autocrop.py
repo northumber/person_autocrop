@@ -62,7 +62,7 @@ def object_detection(input_image_path, output_directory):
             else:
                 ymin = int(ymin * image.shape[0])
             
-            if ymax + (ymax * 0.1) <= image.shape[0]:
+            if int((ymax + (ymax * 0.1)) * image.shape[0]) <= image.shape[0]:
                 ymax = int((ymax + (ymax * 0.1)) * image.shape[0])
             else:
                 ymax = int(ymax * image.shape[0])
@@ -72,7 +72,7 @@ def object_detection(input_image_path, output_directory):
             else:
                 xmin = int(xmin * image.shape[1])
             
-            if xmax + (xmax * 0.1) <= image.shape[1]:
+            if int((xmax + (xmax * 0.1)) * image.shape[1]) <= image.shape[1]:
                 xmax = int((xmax + (xmax * 0.1)) * image.shape[1])
             else:
                 xmax = int(xmax * image.shape[1])
