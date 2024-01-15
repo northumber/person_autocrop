@@ -13,6 +13,8 @@ This script uses **Tensorflow** and **SSD Mobilenet V2 (COCO)** to recognize peo
 - Images extension supported: .jpg, .jpeg, .png, .webp, .bmp
 - Auto-crop a person if found
   - If there is more than one person in the photo, it will create more photos
+  - Batch processing a input folder
+- Option to save image in a specific format or save as input format
 
 ### Requirements
 - Python 3.10 installed (with Python-pip)
@@ -20,7 +22,7 @@ This script uses **Tensorflow** and **SSD Mobilenet V2 (COCO)** to recognize peo
 
 ## How to use
 1. Download the repository
-2. Just run the .bat or .sh scripts.
+3. Just run the .bat or .sh scripts.
    - If Windows: `run.bat`
    - If Linux: `run.sh` (be sure to `chmod +x` the script)
 
@@ -43,4 +45,4 @@ If the automatic script does not work or if you want to use the python script di
 
 5. Run the Python script `person_autocrop.py` with:
 
-`python person_autocrop.py input_folder_path output_folder_path`
+`python person_autocrop.py`
