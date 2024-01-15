@@ -100,7 +100,6 @@ def object_detection(input_image_path, output_directory, output_format):
                         cv2.imwrite(f"{output_directory}/{i + 1}_{filename}.bmp", cropped_person)
                         print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{filename}.bmp'.")
                     else:
-                        print("this is printed")
                         cv2.imwrite(f"{output_directory}/{i + 1}_{image_name}", cropped_person)
                         print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{image_name}'.")
                 except Exception as e:
