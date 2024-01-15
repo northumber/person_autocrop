@@ -66,10 +66,6 @@ if [ ! -d "$MODELFOLDER" ]; then
 fi
 
 echo ""
-read -p "-> Enter input image folder path: " INPUT_FOLDER
-read -p "-> Enter output image folder path: " OUTPUT_FOLDER
-
-echo ""
-echo "LOG: Running the script"
+echo "LOG: Starting the script"
 # Run the Python script
-python person_autocrop.py "$INPUT_FOLDER" "$OUTPUT_FOLDER"
+python person_autocrop.py

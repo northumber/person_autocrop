@@ -35,7 +35,7 @@ def create_folder(output_directory):
             print(f"LOG: Error creating folder '{output_directory}': {e}")
 
 # Function to perform object detection and crop the image
-def object_detection(input_image_path, output_directory):
+def object_detection(input_image_path, output_directory, output_format):
 
     # Read the input image
     image = cv2.imread(input_image_path)
@@ -84,9 +84,25 @@ def object_detection(input_image_path, output_directory):
                 # Save the cropped person image with correct color space conversion
                 try:
                     image_name = os.path.basename(input_image_path)
+                    filename, extension = os.path.splitext(image_name)
+                    
                     # Save the image using cv2.imwrite()
-                    cv2.imwrite(f"{output_directory}/{i + 1}_{image_name}", cropped_person)
-                    print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{image_name}'.")
+                    if output_format == "0":
+                        cv2.imwrite(f"{output_directory}/{i + 1}_{filename}.png", cropped_person)
+                        print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{filename}.png'.")
+                    elif output_format == "1":
+                        cv2.imwrite(f"{output_directory}/{i + 1}_{filename}.jpg", cropped_person)
+                        print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{filename}.jpg'.")
+                    elif output_format == "2":
+                        cv2.imwrite(f"{output_directory}/{i + 1}_{filename}.webp", cropped_person)
+                        print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{filename}.webp'.")
+                    elif output_format == "3":
+                        cv2.imwrite(f"{output_directory}/{i + 1}_{filename}.bmp", cropped_person)
+                        print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{filename}.bmp'.")
+                    else:
+                        print("this is printed")
+                        cv2.imwrite(f"{output_directory}/{i + 1}_{image_name}", cropped_person)
+                        print(f"LOG: Image saved successfully to '{output_directory}/{i + 1}_{image_name}'.")
                 except Exception as e:
                     print(f"LOG: Error saving image: {e}")
             else:
@@ -94,13 +110,6 @@ def object_detection(input_image_path, output_directory):
 
 if __name__ == "__main__":
     import sys
-
-    if len(sys.argv) != 3:
-        print("Usage: python person_crop.py <input_image_folder> <output_directory>")
-        sys.exit(1)
-
-    input_image_folder = sys.argv[1]
-    output_directory = sys.argv[2]
     
     if os.path.exists("ssd_mobilenetv2_coco/saved_model.pb"):
         print("LOG: SSD Mobilenet V2 COCO model found.")
@@ -110,12 +119,24 @@ if __name__ == "__main__":
         print("LOG: SSD Mobilenet V2 COCO model downloaded.")
 
     model = tf.saved_model.load("ssd_mobilenetv2_coco")
-    create_folder(output_directory)
     
+    input_image_folder = input(">> Enter input image path: ")
+    output_directory = input(">> Enter output image path: ")
+
+    print("Select output image format:")
+    print("[0] PNG")
+    print("[1] JPG")
+    print("[2] WEBP")
+    print("[3] BMP")
+    print("[4 or out of range] Input format will be preserved")
+    output_format = input("Enter [0-4]: ")
+    
+    create_folder(output_directory)
+
     print("LOG: Running...")
     # Process all images in the input folder
     for filename in os.listdir(input_image_folder):
         if filename.endswith(".jpg") or filename.endswith(".png") or filename.endswith(".jpeg") or filename.endswith(".webp") or filename.endswith(".bmp"):
             input_image_path = os.path.join(input_image_folder, filename)
-            object_detection(input_image_path, output_directory)
+            object_detection(input_image_path, output_directory, output_format)
     print("LOG: Done.")

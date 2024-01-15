@@ -64,10 +64,6 @@ if not exist "%modelfolder%" (
 )
 
 echo.
-set /p INPUT_FOLDER="-> Enter input image folder path: "
-set /p OUTPUT_FOLDER="-> Enter output image folder path: "
-
-echo.
-echo LOG: Running the script
+echo LOG: Starting the script
 rem Run the Python script
-python person_autocrop.py %INPUT_FOLDER% %OUTPUT_FOLDER%
+python person_autocrop.py
